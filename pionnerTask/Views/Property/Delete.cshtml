@@ -1,0 +1,24 @@
+﻿@model CustomProperty
+@{
+    ViewBag.Title = "Delete Property";
+}
+<div class="container w-50">
+    <h3>Delete Custom Property</h3>
+    <form asp-action="Delete" method="post">
+        <div>
+            <input class="form-control" asp-for=Id readonly hidden disabled="">
+        </div>
+        <div>
+            <label asp-for="Name" class="form-label mt-4"></label>
+            <input class="form-control" asp-for=Name readonly disabled="">
+        </div>
+        <div>
+            <label asp-for="Type" class="form-label mt-4"></label>
+            <input class="form-control" asp-for=Type readonly disabled="">
+        </div>
+        <div class="text-center">
+        <button type="submit" class="btn btn-danger mt-3 btn-lg ">Delete</button>
+        </div>
+    </form>
+        
+</div>

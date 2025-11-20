@@ -1,0 +1,97 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Create Employee";
+    var customProperties = ViewBag.CustomProperties as List<CustomProperty> ?? new List<CustomProperty>();
+}
+
+<div class="container w-50">
+    <h3>Create Employee</h3>
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+     
+        <div class="mb-3">
+            <label asp-for="Code" class="form-label"></label>
+            <input class="form-control" asp-for="Code" placeholder="Enter Code" />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+
+      
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input class="form-control" asp-for="Name" placeholder="Enter Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+  
+        @foreach (var prop in customProperties)
+        {
+            <div class="mb-3">
+                <label class="form-label">@prop.Name</label>
+                @{
+                    var requiredAttr = prop.IsRequired ? "required" : "";
+                }
+
+                @switch (prop.Type)
+                {
+                    case "text":
+                        <input type="text" name="Properties[@prop.Id]" class="form-control" @requiredAttr />
+                        break;
+
+                    case "number":
+                        <input type="number" name="Properties[@prop.Id]" class="form-control" @requiredAttr />
+                        break;
+
+                    case "date":
+                       
+                        <input type="date" name="Properties[@prop.Id]" class="form-control" @requiredAttr value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        break;
+
+                    case "checkbox":
+                        <input type="hidden" name="Properties[@prop.Id]" value="false" />
+                        <input type="checkbox" name="Properties[@prop.Id]" value="true" class="form-check-input" @requiredAttr />
+                        break;
+
+                    case "Dropdown":
+                        @if (prop.Options != null && prop.Options.Count > 0)
+                        {
+                            if (prop.Name == "dropdown")
+                            {
+                                <select name="Properties[@prop.Id][]" class="form-select" multiple @requiredAttr>
+                                    @foreach (var option in prop.Options)
+                                    {
+                                        <option value="@option">@option</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <select name="Properties[@prop.Id]" class="form-select" @requiredAttr>
+                                    @foreach (var option in prop.Options)
+                                    {
+                                        <option value="@option">@option</option>
+                                    }
+                                </select>
+                            }
+                        }
+                        else
+                        {
+                            <select class="form-select" disabled>
+                                <option>No options available</option>
+                            </select>
+                        }
+                        break;
+                }
+            </div>
+        }
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg mt-3">Create</button>
+            <a asp-action="Index" class="btn btn-secondary btn-lg mt-3">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

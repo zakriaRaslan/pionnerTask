@@ -1,0 +1,65 @@
+﻿@model Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Employee Details</h2>
+
+    <div class="card shadow-sm p-4">
+        <h4 class="mb-3">Basic Information</h4>
+
+        <dl class="row">
+            <dt class="col-sm-3">Name:</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Code:</dt>
+            <dd class="col-sm-9">@Model.Code</dd>
+        </dl>
+
+        <hr />
+
+        <h4 class="mb-3">Custom Properties</h4>
+
+        @if (Model.PropertiesValues != null && Model.PropertiesValues.Any())
+        {
+            <dl class="row">
+
+                @foreach (var prop in Model.PropertiesValues)
+                {
+                    <dt class="col-sm-3">@prop.CustomProperty.Name:</dt>
+
+                    <dd class="col-sm-9">
+                        @if (prop.CustomProperty.Type == "checkbox")
+                        {
+                            <span class="badge bg-primary">
+                                @(prop.Value == "true" ? "Yes" : "No")
+                            </span>
+                        }
+                        else if (prop.CustomProperty.Type == "date")
+                        {
+                            <span>@(DateTime.TryParse(prop.Value, out var date) ? date.ToString("yyyy-MM-dd") : prop.Value)</span>
+                        }
+                        else
+                        {
+                            <span>@prop.Value</span>
+                        }
+                    </dd>
+                }
+
+            </dl>
+        }
+        else
+        {
+            <p class="text-muted">No custom data for this employee.</p>
+        }
+
+        <div class="mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+
+</div>

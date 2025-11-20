@@ -1,0 +1,38 @@
+﻿@model CustomProperty
+
+@{
+        ViewData["Title"] = "Property Details";
+}
+
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4>Property Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> @Model.Name</p>
+            <p><strong>Type:</strong> @Model.Type</p>
+            <p><strong>Is Required:</strong> @(Model.IsRequired ? "Yes" : "No")</p>
+
+            @if (Model.Options != null && Model.Options.Any())
+            {
+                <p><strong>Options:</strong></p>
+                <div>
+                    @foreach (var option in Model.Options)
+                    {
+                        <span class="badge bg-info text-dark me-1">@option</span>
+                    }
+                </div>
+            }
+            else
+            {
+                <p><strong>Options:</strong> <span class="text-muted">No options</span></p>
+            }
+        </div>
+        <div class="card-footer text-end">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>

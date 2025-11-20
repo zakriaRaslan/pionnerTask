@@ -1,0 +1,68 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Edit Employee";
+    List<CustomProperty>? AllProperties = ViewBag.AllProperties as List<CustomProperty>;
+}
+
+<div class="container w-50">
+    <h3>Edit Employee</h3>
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div>
+            <label asp-for="Code" class="form-label mt-4"></label>
+            <input class="form-control" asp-for="Code" placeholder="Enter Code">
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Name" class="form-label mt-4"></label>
+            <input class="form-control" asp-for="Name" placeholder="Enter Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        @if (AllProperties != null && AllProperties.Any())
+        {
+            var employeeValues = ViewBag.EmployeeValues as Dictionary<int, string>;
+
+            foreach (var prop in AllProperties)
+            {
+                var value = employeeValues != null && employeeValues.ContainsKey(prop.Id) ? employeeValues[prop.Id] : "";
+
+                <label>@prop.Name</label>
+                @if (prop.Type == "text")
+                {
+                    <input type="text" name="Properties[@prop.Id]" value="@value" @(prop.IsRequired ? "required" : "") class="form-control" />
+                }
+                else if (prop.Type == "number")
+                {
+                    <input type="number" name="Properties[@prop.Id]" value="@value" @(prop.IsRequired ? "required" : "") class="form-control" />
+                }
+                else if (prop.Type == "date")
+                {
+                    <input type="date" name="Properties[@prop.Id]" value="@value" @(prop.IsRequired ? "required" : "") class="form-control" />
+                }
+                else if (prop.Type == "checkbox")
+                {
+                    <input type="checkbox" name="Properties[@prop.Id]" value="true" @(value == "true" ? "checked" : "") @(prop.IsRequired ? "required" : "") class="form-check-input" />
+                }
+                else if (prop.Type == "Dropdown")
+                {
+                    <label for="prop.Name" class="form-label mt-4"></label>
+                    <select multiple="" class="form-select" id="exampleSelect2">
+                        @foreach(var option in prop.Options)
+                        {
+                        <option value="@option.ToString()">@option.ToString()</option>
+                            
+                        }
+                        
+                   
+                    </select>
+                }
+            }
+        }
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg mt-4">Save Changes</button>
+        </div>
+    </form>
+</div>

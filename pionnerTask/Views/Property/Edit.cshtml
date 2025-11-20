@@ -1,0 +1,102 @@
+﻿@model CustomProperty
+
+<div class="container">
+    <h2>Edit Custom Property</h2>
+    <form asp-action="Edit">
+        <div>
+            <label asp-for="Name" class="form-label mt-4"></label>
+            <input class="form-control" asp-for="Name" placeholder="Enter Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Type" class="form-label">Property Type</label>
+            <select asp-for="Type" class="form-select" id="DataTypeSelect">
+                <option value="">Select Type</option>
+                <option value="text">Text</option>
+                <option value="number">Number</option>
+                <option value="dropDown">DropDown</option>
+                <option value="Date">Date</option>
+                <option value="checkbox">Boolean</option>
+            </select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+
+            <div id="DropDownOptions" style="display:none; margin-top:10px;">
+                <label>Enter dropdown options:</label>
+                <div id="optionsContainer"></div>
+                <button type="button" class="btn btn-info mt-2" onclick="addOption()">Add Option</button>
+            </div>
+
+            <div class="form-check form-switch mt-3">
+                <input class="form-check-input" type="checkbox" asp-for="IsRequired">
+                <label class="form-check-label" asp-for="IsRequired">Is Required</label>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg">Save</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const dataTypeSelect = document.getElementById("DataTypeSelect");
+    const dropDownOptions = document.getElementById("DropDownOptions");
+    const optionsContainer = document.getElementById("optionsContainer");
+    let optionIndex = 0;
+
+    function showDropDown() {
+        if (dataTypeSelect.value === "dropDown") {
+            dropDownOptions.style.display = "block";
+        } else {
+            dropDownOptions.style.display = "none";
+            optionsContainer.innerHTML = "";
+            optionIndex = 0;
+        }
+    }
+
+    dataTypeSelect.addEventListener("change", showDropDown);
+
+    function addOption(value = "") {
+        const div = document.createElement("div");
+        div.className = "d-flex gap-2 mb-2";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.name = `Options[${optionIndex}]`;
+        input.value = value;
+        input.className = "form-control";
+        input.placeholder = "Enter option";
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "btn btn-danger";
+        removeBtn.textContent = "Remove";
+        removeBtn.onclick = function () {
+            div.remove();
+        };
+
+        div.appendChild(input);
+        div.appendChild(removeBtn);
+
+        optionsContainer.appendChild(div);
+        optionIndex++;
+    }
+
+    // عند تحميل الصفحة، عرض الـ options الموجودة مسبقاً
+    window.addEventListener("DOMContentLoaded", (event) => {
+        showDropDown(); // تظهر الـ div لو النوع dropDown
+        @* Loop through existing options *@
+        @if (Model.Options != null && Model.Options.Any())
+        {
+                foreach (var option in Model.Options)
+                {
+                        <text>addOption("@option");</text>
+                }
+        }
+    });
+</script>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

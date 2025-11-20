@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Employee>
+
+@{
+    ViewData["Title"] = "Employee List";
+}
+<div class="row align-items-center mb-3">
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6 text-end ">
+        <a asp-action="Create" asp-controller="Employees" class="btn btn-primary btn-lg ">Create</a>
+    </div>
+@if (Model.Count() == 0)
+{
+        <div class="text-center">
+            <h1 class="display-4">No Employee Yet</h1>
+        </div>
+}
+else
+{
+        <div class="container">
+            <h2 class="">Employees</h2>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Properties</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model)
+                    {
+                        <tr class="table-secondary">
+                            <td>@employee.Code</td>
+                            <td>@employee.Name</td>
+                            @if (employee.PropertiesValues != null && employee.PropertiesValues.Count > 0)
+                            {
+                                <td>
+                                    <ul>
+                                        @foreach (var prop in employee.PropertiesValues)
+                                        {
+                                            <li> Prop: @prop.CustomProperty.Name | value:@prop.Value</li>
+                                        }
+                                    </ul>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>No Properties</td>
+                            }
+
+                         
+
+                            <td>
+                                <a asp-action="Edit" class="btn btn-success" asp-route-Id="@employee.Id">Edit</a>
+                                <a asp-action="Delete" class="btn btn-danger" asp-route-Id="@employee.Id">Delete</a>
+                                <a asp-action="Details" class="btn btn-info" asp-route-Id="@employee.Id">Details</a>
+
+                            </td>
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+}
+
