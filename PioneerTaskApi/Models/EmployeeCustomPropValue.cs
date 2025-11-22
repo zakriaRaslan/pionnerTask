@@ -7,5 +7,6 @@
         public Employee? Employee { get; set; }
         public int CustomPropertyId { get; set; }
         public CustomProperty? CustomProperty { get; set; }
+        public string? Value { get; set; } = string.Empty;
     }
 }

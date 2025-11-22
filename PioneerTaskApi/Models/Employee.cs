@@ -7,6 +7,7 @@ namespace PioneerTaskApi.Models
         public int Id { get; set; }
         [MaxLength(40)]
         public string Name { get; set; } = string.Empty;
+        [Required]
         public int Code { get; set; }
         public ICollection<EmployeeCustomPropValue>? EmployeeCustomPropValues { get; set; }
     }

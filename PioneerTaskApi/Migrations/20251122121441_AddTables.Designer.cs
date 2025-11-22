@@ -11,8 +11,8 @@ using PioneerTaskApi.Data;
 namespace PioneerTaskApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251122093255_CreateTables")]
-    partial class CreateTables
+    [Migration("20251122121441_AddTables")]
+    partial class AddTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,6 +87,9 @@ namespace PioneerTaskApi.Migrations
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -85,6 +85,9 @@ namespace PioneerTaskApi.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomPropertyId");

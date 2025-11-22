@@ -31,14 +31,12 @@ namespace PioneerTaskApi.Repositories
 
         public async Task AddEmployeeAsync(Employee employee)
         {
-              await _context.Employees.AddAsync(employee);
-              await _context.SaveChangesAsync();
+              await _context.Employees.AddAsync(employee);           
         }
 
         public async Task UpdateEmployeeAsync(Employee employee)
         {
-            _context.Employees.Update(employee);
-            await _context.SaveChangesAsync();
+            _context.Employees.Update(employee);          
         }
 
         public async Task DeleteEmployeeAsync(Employee employee)

@@ -5,7 +5,7 @@
 namespace PioneerTaskApi.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTables : Migration
+    public partial class AddTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,8 @@ namespace PioneerTaskApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    CustomPropertyId = table.Column<int>(type: "int", nullable: false)
+                    CustomPropertyId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
