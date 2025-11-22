@@ -39,20 +39,23 @@ namespace pionnerTask.Controllers
                 return BadRequest();
 
             await _employeesService.AddAsync(employee);
+            var employeeFromDb = await _employeesService.GetByIdAsync(employee.Id);
+            if (employeeFromDb == null)
+                return NotFound();
             if (Properties != null)
             {
                 foreach (var prop in Properties)
                 {
-                    _context.EmployeePropertiesValue.Add(new EmployeePropertieValue
+                 await _context.EmployeePropertiesValue.AddAsync(new EmployeePropertieValue
                     {
-                        EmployeeId = employee.Id,
+                        EmployeeId = employeeFromDb.Id,
                         CustomPropertyId = prop.Key,
                         Value = prop.Value
                     });
                 }
 
             }
-           
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -103,10 +106,10 @@ namespace pionnerTask.Controllers
                 return NotFound();
 
             
-            foreach (var item in Properties)
+            foreach (var Prop in Properties)
             {
-                int propertyId = item.Key;   
-                string value = item.Value;   
+                int propertyId = Prop.Key;   
+                string value = Prop.Value;   
 
                 var existing = employee.PropertiesValues
                     .FirstOrDefault(v => v.CustomPropertyId == propertyId);

@@ -1,0 +1,6 @@
+@PioneerTaskApi_HostAddress = http://localhost:5084
+
+GET {{PioneerTaskApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

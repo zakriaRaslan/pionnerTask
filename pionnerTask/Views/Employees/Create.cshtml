@@ -35,7 +35,7 @@
                 @switch (prop.Type)
                 {
                     case "text":
-                        <input type="text" name="Properties[@prop.Id]" class="form-control" @requiredAttr />
+                        <input type="text" name="Properties[@prop.Id]" class="form-control" @requiredAttr />                      
                         break;
 
                     case "number":
@@ -48,31 +48,22 @@
                         break;
 
                     case "checkbox":
-                        <input type="hidden" name="Properties[@prop.Id]" value="false" />
-                        <input type="checkbox" name="Properties[@prop.Id]" value="true" class="form-check-input" @requiredAttr />
+                     
+                        <input type="hidden" name="Properties[@prop.Id]" value="true" />
+                        <input type="checkbox" name="Properties[@prop.Id]" value="false" class="form-check-input"/>                      
                         break;
 
-                    case "Dropdown":
+                    case "dropdown":
                         @if (prop.Options != null && prop.Options.Count > 0)
                         {
-                            if (prop.Name == "dropdown")
-                            {
-                                <select name="Properties[@prop.Id][]" class="form-select" multiple @requiredAttr>
-                                    @foreach (var option in prop.Options)
-                                    {
-                                        <option value="@option">@option</option>
-                                    }
-                                </select>
-                            }
-                            else
-                            {
+                           
                                 <select name="Properties[@prop.Id]" class="form-select" @requiredAttr>
                                     @foreach (var option in prop.Options)
                                     {
                                         <option value="@option">@option</option>
                                     }
                                 </select>
-                            }
+                            
                         }
                         else
                         {

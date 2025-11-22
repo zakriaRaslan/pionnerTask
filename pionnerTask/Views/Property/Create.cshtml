@@ -18,8 +18,8 @@
                 <option value="">Select Type</option>
                 <option value="text">Text</option>
                 <option value="number">Number</option>
-                <option value="dropDown">DropDown</option>
-                <option value="Date">Date</option>
+                <option value="dropdown">Dropdown</option>
+                <option value="date">Date</option>
                 <option value="checkbox">Boolean</option>
             </select>
             <span asp-validation-for="Type" class="text-danger"></span>
@@ -48,7 +48,7 @@
     let optionIndex = 0;
 
     dataTypeSelect.addEventListener("change", function () {
-        if (this.value === "dropDown") {
+        if (this.value === "dropdown") {
             dropDownOptions.style.display = "block";
         } else {
             dropDownOptions.style.display = "none";
